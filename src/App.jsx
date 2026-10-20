@@ -9,13 +9,13 @@ import "./App.css";
 const PORTFOLIO_DATA = {
   profile: {
     role: "BACKEND & FULL-STACK DEVELOPER",
-    name: "조하나",
+    name: "조예나",
     headline:
       "데이터 정합성과 시스템 안정성을 기반으로, 엔드투엔드 서비스를 구축하는 개발자입니다.",
     subIntro:
       "Spring MVC·MyBatis·Oracle 기반의 API 아키텍처 설계와 트랜잭션 제어에 강점이 있으며, React·JSP를 활용한 클라이언트 연동까지 주도적으로 수행합니다.",
     avatar: "/profile.jpg",
-    email: "a77528221@gmail.com",
+    email: "whdpsk_46720@naver.com",
     githubUrl: "https://github.com/a77528221-alt",
     blogUrl: "", // 블로그나 노션 이력서 링크 (사용하지 않으면 "" 빈 문자열로 두세요)
   },
@@ -216,9 +216,9 @@ export default function App() {
                   type="button"
                   className={`contact-chip ${copied ? "is-copied" : ""}`}
                   onClick={handleCopyEmail}>
-                  <span>✉️ {profile.email}</span>
+                  <span>{profile.email}</span>
                   <span className={`copy-status ${copied ? "copied" : ""}`}>
-                    {copied ? "✓ 복사됨" : "복사"}
+                    {copied ? "복사됨" : "복사"}
                   </span>
                 </button>
 
@@ -228,7 +228,7 @@ export default function App() {
                     target="_blank"
                     rel="noreferrer"
                     className="contact-chip">
-                    🐙 GitHub 바로가기 ↗
+                    GitHub 바로가기 ↗
                   </a>
                 )}
 
@@ -238,7 +238,7 @@ export default function App() {
                     target="_blank"
                     rel="noreferrer"
                     className="contact-chip">
-                    📝 기술 블로그 / 노션 ↗
+                    기술 블로그 / 노션 ↗
                   </a>
                 )}
               </div>
@@ -329,7 +329,6 @@ export default function App() {
 
                   {/* 핵심 성과 강조 */}
                   <div className="highlight-box">
-                    <span className="highlight-icon">💡</span>
                     <span>{proj.highlight}</span>
                   </div>
 
