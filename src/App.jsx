@@ -14,8 +14,7 @@ const PORTFOLIO_DATA = {
       "데이터 정합성과 시스템 안정성을 기반으로, 엔드투엔드 서비스를 구축하는 개발자입니다.",
     subIntro:
       "Spring MVC·MyBatis·Oracle 기반의 API 아키텍처 설계와 트랜잭션 제어에 강점이 있으며, React·JSP를 활용한 클라이언트 연동까지 주도적으로 수행합니다.",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    avatar: "/profile.jpg",
     email: "a77528221@gmail.com",
     githubUrl: "https://github.com/a77528221-alt",
     blogUrl: "", // 블로그나 노션 이력서 링크 (사용하지 않으면 "" 빈 문자열로 두세요)
