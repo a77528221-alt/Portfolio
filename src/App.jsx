@@ -60,8 +60,7 @@ const PORTFOLIO_DATA = {
         "REST API",
         "React",
       ],
-      image:
-        "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
+      image: "/project-jetteyak.png",
       details: [
         "개인·가족 통합 복약 캘린더 REST API 설계 및 다건 복약 일정 일괄 체크(전체 완료/취소) API 구현",
         "가족 초대·권한 검증(UserAccess) 및 회원 유형별(일반/가상 프로필) 분리 트랜잭션 제어",
@@ -100,8 +99,7 @@ const PORTFOLIO_DATA = {
         "SSE / WebSocket",
         "JSP / JS",
       ],
-      image:
-        "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80",
+      image: "/project-frade.png",
       details: [
         "메인 대시보드 API 설계 및 실시간 거래대금·인기 게시글 Top 5 집계 연동",
         "인메모리 캐시를 적용한 KOSPI 지수 차트 조회 API 및 화면 연동 구현",
@@ -133,8 +131,7 @@ const PORTFOLIO_DATA = {
       summary:
         "레트로 윈도우 탐색기 콘셉트의 화면에서 두 캐릭터의 옷장을 오가며 의상을 입히거나 상대방 옷을 가져와 코디하고, 착용 조합에 따른 데이트 결과를 확인하는 웹 서비스입니다.",
       tags: ["React", "JavaScript", "React Router", "HTML/CSS", "Vite"],
-      image:
-        "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+      image: "/project-niotneot.png",
       details: [
         "1개만 착용하는 부위(상의·하의·외투·양말·신발)는 단일 슬롯으로, 여러 개 착용하는 악세사리는 배열로 분리한 상태 구조 설계",
         "필수 착용 아이템 포함 여부와 제외 카테고리를 비교해 세트 코디 성공 여부를 판별하는 매칭 로직 구현",
