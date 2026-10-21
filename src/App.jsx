@@ -13,7 +13,7 @@ const PORTFOLIO_DATA = {
     headline:
       "데이터 정합성과 시스템 안정성을 기반으로, 엔드투엔드 서비스를 구축하는 개발자입니다.",
     subIntro:
-      "Spring MVC·MyBatis·Oracle 기반의 API 아키텍처 설계와 트랜잭션 제어에 강점이 있으며, React·JSP를 활용한 클라이언트 연동까지 주도적으로 수행합니다.",
+      "Spring Framework·MyBatis·Oracle DB 기반의 API 아키텍처 설계와 트랜잭션 제어에 강점이 있으며, React·JSP를 활용한 클라이언트 연동까지 주도적으로 수행합니다.",
     avatar: "/profile.jpg",
     email: "whdpsk_46720@naver.com",
     githubUrl: "https://github.com/a77528221-alt",
@@ -22,8 +22,8 @@ const PORTFOLIO_DATA = {
 
   skillCategories: [
     {
-      category: "Language",
-      skills: ["Java", "SQL", "JavaScript", "HTML5 / CSS3"],
+      category: "Languages & Web",
+      skills: ["Java", "SQL", "JavaScript", "HTML/CSS"],
     },
     {
       category: "OS",
@@ -31,14 +31,14 @@ const PORTFOLIO_DATA = {
     },
     {
       category: "Framework + Library",
-      skills: ["Spring MVC", "Spring Boot", "MyBatis", "React", "JSP"],
+      skills: ["Spring Framework", "Spring Boot", "MyBatis", "React", "JSP"],
     },
     {
       category: "Database",
-      skills: ["Oracle", "MySQL"],
+      skills: ["Oracle DB", "MySQL"],
     },
     {
-      category: "Development Tool",
+      category: "Tools",
       skills: ["Git", "GitHub", "Maven", "Vite", "Notion", "Figma"],
     },
   ],
@@ -48,103 +48,113 @@ const PORTFOLIO_DATA = {
       id: 1,
       number: "01",
       title: "Jette-Yak · 스마트 복약 관리 플랫폼",
-      period: "2026.09 - 2026.10",
+      period: "2026.09.11 - 2026.10.08 (총 28일)",
       role: "4인 팀 · 백엔드 & 풀스택 (일정·가족·알림 도메인)",
       summary:
-        "처방전 OCR·DUR 분석 기반으로 개인 및 가족 그룹의 복약 스케줄과 실시간 알림을 통합 관리하는 웹/PWA 서비스입니다.",
-      tags: ["Java 21", "Spring MVC", "MyBatis", "Oracle", "REST API", "React 19"],
+        "처방전 OCR·DUR(의약품안전사용서비스) 분석을 바탕으로 개인 및 가족 그룹의 복약 스케줄과 실시간 알림을 통합 관리하는 웹/PWA 서비스입니다.",
+      tags: [
+        "Java 21",
+        "Spring Framework",
+        "MyBatis",
+        "Oracle DB",
+        "REST API",
+        "React 19",
+      ],
       image:
         "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
       details: [
-        "개인·가족 통합 캘린더 REST API 설계 및 복약 상태 Batch 토글 구현",
-        "가족 초대·권한 검증(UserAccess) 및 회원 유형별 분리 트랜잭션 제어",
-        "용법 파싱 기반 복약 시간대 자동 매핑 및 비동기 요청 경합 방지",
+        "개인·가족 통합 복약 캘린더 REST API 설계 및 다건 복약 일정 일괄 체크(전체 완료/취소) API 구현",
+        "가족 초대·권한 검증(UserAccess) 및 회원 유형별(일반/가상 프로필) 분리 트랜잭션 제어",
+        "처방 용법 파싱 기반 복약 시간대 자동 매핑 및 프론트엔드 비동기 요청 경합 방지",
       ],
       highlight:
-        "수동 트랜잭션 분기 설계로 8개 연관 테이블의 원자적(Atomic) 무결성 확보",
+        "회원 유형에 따른 JDBC 트랜잭션 직접 제어로 구성원 삭제 시 데이터 유실 및 외래키 오류 해결",
       troubleshooting: {
         problem:
-          "가족 구성원 삭제 시 일반 회원과 비회원(가상 프로필)의 하위 복약 데이터 생명주기가 달라 외래키 제약 오류 및 데이터 불일치 발생",
+          "가족 구성원 삭제 시 직접 등록한 '비회원(가상 프로필)'과 '일반 가입 회원'이 동일 테이블을 참조하고 있어, 일괄 삭제 시 일반 회원의 개인 복약 기록이 유실되거나 가상 프로필의 하위 8개 테이블 외래키 제약조건 위반으로 일부 쿼리만 실행된 채 중단되는 문제 발생",
         solution:
-          "IS_VIRTUAL 플래그 기반 수동 트랜잭션(autoCommit=false)을 구성해 가상 프로필은 8개 연관 테이블을 연쇄 삭제하고, 일반 회원은 가족 연결(FAMILY_ID)만 해제하도록 분기",
+          "@Transactional 대신 SqlSession에서 단일 JDBC Connection을 열어 setAutoCommit(false)로 트랜잭션을 직접 제어했습니다. IS_VIRTUAL 값을 먼저 조회해 일반 회원은 의료 기록을 보존한 채 가족 연결(FAMILY_ID)만 해제하고, 가상 프로필은 참조 역순으로 하위 8개 연관 테이블(처방전 상세·스케줄·보관함 등)을 순차 삭제한 뒤 모든 쿼리가 성공했을 때만 commit(), 도중 예외 발생 시 rollback()을 호출하도록 구현",
         result:
-          "예외 발생 시 부분 반영 없는 완벽한 롤백을 보장하고 가족 복약 데이터의 정합성 100% 달성",
+          "일반 회원의 개인 복약 이력 유실을 방지하고, 가상 프로필 삭제 도중 예외가 발생하더라도 이전 단계 쿼리까지 모두 롤백되어 고아 데이터 없이 가족 데이터 정합성을 유지",
       },
       links: {
-        github: "https://github.com/jws909/Jette-Yak",
+        github: "https://github.com/a77528221-alt/Jette-Yak",
         docs: "",
         demo: "",
+        video: "", // 시연 영상 링크 입력란
       },
     },
     {
       id: 2,
       number: "02",
       title: "Frade · 실시간 주식 모의투자 플랫폼",
-      period: "2026.08 - 2026.09",
+      period: "2026.08.25 - 2026.09.07 (총 14일)",
       role: "5인 팀 · 백엔드 & 풀스택 (대시보드 API·전체 뷰 통합)",
       summary:
         "키움증권 WebSocket과 SSE 기반 실시간 시세·지수 스트리밍 및 모의 매매, 투자 커뮤니티를 제공하는 서비스입니다.",
       tags: [
         "Java 17",
-        "Spring MVC",
+        "Spring Framework",
         "MyBatis",
-        "Oracle",
+        "Oracle DB",
         "SSE / WebSocket",
         "JSP / JS",
       ],
       image:
         "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80",
       details: [
-        "메인 대시보드 API 설계 및 실시간 거래대금·인기글 Top 5 집계 연동",
-        "인메모리 캐시 기반 KOSPI 차트 조회 및 Jackson JSON 직렬화 구현",
-        "공통 응답 규격(Response Wrapper) 적용 및 트레이딩·커뮤니티 뷰 통합",
+        "메인 대시보드 API 설계 및 실시간 거래대금·인기 게시글 Top 5 집계 연동",
+        "인메모리 캐시를 적용한 KOSPI 지수 차트 조회 API 및 화면 연동 구현",
+        "공통 응답 규격(Response Wrapper) 적용 및 트레이딩·커뮤니티·마이페이지 뷰 통합",
       ],
       highlight:
-        "인메모리 캐시 연동 파이프라인으로 외부 증권 API 중복 호출 제거",
+        "스케줄러 기반 인메모리 캐시 조회와 차트 데이터 변환 예외 처리로 대시보드 응답 속도 및 안정성 확보",
       troubleshooting: {
         problem:
-          "대시보드 진입 시 KOSPI 차트·실시간 랭킹·인기 게시글 동시 조회로 인한 외부 API 호출 병목 및 직렬화 예외 위험 발생",
+          "메인 대시보드 진입 시마다 외부 증권사 API를 직접 호출해 KOSPI 차트와 실시간 랭킹을 가져오면 응답 지연이 발생하고, 서버의 차트 데이터 리스트(List<Object[]>)를 JSP 차트 스크립트로 전달할 때 JSON 변환 오류가 발생하면 대시보드 페이지 전체가 열리지 않는 문제 발생",
         solution:
-          "스케줄러가 갱신하는 인메모리 캐시(StockMemoryCache·StockRankingCache)를 참조하도록 개선하고 ObjectMapper 예외 방어 로직 적용",
+          "백그라운드 스케줄러가 주기적으로 갱신해 둔 서버 인메모리 캐시(StockMemoryCache·StockRankingCache)에서 시세와 차트 데이터를 즉시 조회하도록 개선했습니다. 또한 차트 리스트를 Jackson ObjectMapper(writeValueAsString)로 JSON 문자열 변환 시 try-catch로 JsonProcessingException을 잡아, 변환에 실패하더라도 기본 빈 배열(\"[]\")을 내려주도록 방어 로직을 구현",
         result:
-          "외부 API 직접 호출 없이 대시보드 초기 응답 지연을 해소하고 안정적인 실시간 데이터 서빙 구현",
+          "외부 API 중복 호출을 제거해 대시보드 로딩 지연을 해소했으며, 차트 데이터 매핑 오류가 발생하더라도 에러 페이지 대신 인기 종목·커뮤니티 등 대시보드 전체 화면이 정상 렌더링되도록 안정성 확보",
       },
       links: {
-        github: "https://github.com/chlqjarb0216-bit/frade",
+        github: "https://github.com/a77528221-alt/frade",
         docs: "",
         demo: "",
+        video: "", // 시연 영상 링크 입력란
       },
     },
     {
       id: 3,
       number: "03",
       title: "니옷내옷 · 코디 매칭 및 옷장 공유 서비스",
-      period: "2026.08 - 2026.09",
-      role: "2인 팀 · 풀스택 프론트엔드 (데이터 모델링·매칭 로직)",
+      period: "2026.08.18 - 2026.09.02 (총 16일)",
+      role: "2인 팀 · 프론트엔드 (착용 상태 설계·세트 매칭 로직·레이어링 구현)",
       summary:
-        "정규화된 아이템 스키마와 규칙 기반 매칭 엔진으로 캐릭터 간 의상 이관 및 착용 조합을 연산하는 웹 애플리케이션입니다.",
-      tags: ["React 19", "JavaScript", "Data Modeling", "State Architecture", "Vite"],
+        "레트로 윈도우 탐색기 콘셉트의 화면에서 두 캐릭터의 옷장을 오가며 의상을 입히거나 상대방 옷을 가져와 코디하고, 착용 조합에 따른 데이트 결과를 확인하는 웹 서비스입니다.",
+      tags: ["React 19", "JavaScript", "React Router", "HTML/CSS", "Vite"],
       image:
         "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
       details: [
-        "단일 슬롯 객체와 다중 배열(acc)을 결합한 하이브리드 상태 스키마 설계",
-        "필수 아이템 교집합 및 배제 조건 검증 기반 코디 세트 매칭 알고리즘 구현",
-        "식별자(ID) 파싱 기반 소유권 이관(Steal) 로직 및 7단계 렌더링 계층 분리",
+        "1개만 착용하는 부위(상의·하의·외투·양말·신발)는 단일 슬롯으로, 여러 개 착용하는 악세사리는 배열로 분리한 상태 구조 설계",
+        "필수 착용 아이템 포함 여부와 제외 카테고리를 비교해 세트 코디 성공 여부를 판별하는 매칭 로직 구현",
+        "상대방 옷장 아이템 가져오기(훔쳐오기) 기능 및 7단계(z-index) 의상 겹침 순서 제어 구현",
       ],
       highlight:
-        "하이브리드 상태 모델링과 규칙 기반 매칭 엔진으로 복합 조합 무결성 확보",
+        "단일 착용 부위와 다중 착용 악세사리의 상태 구조를 분리해 의상 겹침 및 착용 풀림 오류 해결",
       troubleshooting: {
         problem:
-          "다중 악세사리 착용 시 단일 슬롯 상태가 덮어써지고, UI 분류 탭과 실제 착용 계층 불일치로 조합 판별 및 레이어 충돌 발생",
+          "악세사리를 여러 개 선택하면 기존 착용 아이템이 덮어써져 풀리고, '악세사리' 탭에 분류된 양말이나 망토형 상의를 입힐 때 신발·캐릭터 손 이미지와 겹치는 순서(z-index)가 꼬여 옷이 뚫고 나오는 현상 발생",
         solution:
-          "착용 상태를 단일 슬롯과 배열(acc) 혼합 스키마로 정규화하고, 속성 판별 함수를 통해 UI 필터와 7단계 렌더링 슬롯을 분리",
+          "착용 상태를 부위별 단일 슬롯(top, outer, bottom, socks, shoes)과 다중 배열(acc) 혼합 구조로 변경하고, 화면의 카테고리 탭 분류와 실제 캐릭터 위에 그려지는 7단계 레이어 위치(양말은 신발 아래, 외투는 손 위)를 분리해 매핑하도록 구현",
         result:
-          "아이템 복제(Steal) 및 다중 착용 시에도 상태 오염 없이 정확한 세트 판별과 일관된 렌더링 보장",
+          "여러 개의 악세사리를 동시에 착용하거나 상대방 옷을 가져와 조합해도 기존 착장이 풀리지 않고, 모든 의상과 캐릭터 신체 부위가 자연스러운 순서로 표시되도록 개선",
       },
       links: {
-        github: "https://github.com/haney6438/niotneot",
+        github: "https://github.com/a77528221-alt/niotneot",
         docs: "",
-        demo: "",
+        demo: "https://niotneot-mjj.web.app/",
+        video: "", // 시연 영상 링크 입력란
       },
     },
   ],
@@ -362,6 +372,15 @@ export default function App() {
                           배포 링크 ↗
                         </a>
                       )}
+                      {proj.links.video && (
+                        <a
+                          href={proj.links.video}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="link-btn secondary">
+                          시연 영상 ↗
+                        </a>
+                      )}
                     </div>
 
                     {proj.troubleshooting && (
@@ -467,6 +486,15 @@ export default function App() {
                   rel="noreferrer"
                   className="link-btn secondary">
                   배포 사이트 ↗
+                </a>
+              )}
+              {selectedProject.links.video && (
+                <a
+                  href={selectedProject.links.video}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-btn secondary">
+                  시연 영상 보기 ↗
                 </a>
               )}
             </div>
