@@ -48,17 +48,17 @@ const PORTFOLIO_DATA = {
       id: 1,
       number: "01",
       title: "Jette-Yak · 스마트 복약 관리 플랫폼",
-      period: "2026.09.11 - 2026.10.08 (총 28일)",
+      period: "2026.09.14 - 2026.10.08 (총 25일)",
       role: "4인 팀 · 백엔드 & 풀스택 (일정·가족·알림 도메인)",
       summary:
         "처방전 OCR·DUR(의약품안전사용서비스) 분석을 바탕으로 개인 및 가족 그룹의 복약 스케줄과 실시간 알림을 통합 관리하는 웹/PWA 서비스입니다.",
       tags: [
-        "Java 21",
+        "Java",
         "Spring Framework",
         "MyBatis",
         "Oracle DB",
         "REST API",
-        "React 19",
+        "React",
       ],
       image:
         "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80",
@@ -80,20 +80,20 @@ const PORTFOLIO_DATA = {
       links: {
         github: "https://github.com/a77528221-alt/Jette-Yak",
         docs: "",
-        demo: "",
-        video: "", // 시연 영상 링크 입력란
+        demo: "https://34-64-159-225.sslip.io/",
+        video: "https://youtu.be/I-fsd66Os_8",
       },
     },
     {
       id: 2,
       number: "02",
       title: "Frade · 실시간 주식 모의투자 플랫폼",
-      period: "2026.08.25 - 2026.09.07 (총 14일)",
+      period: "2026.08.20 - 2026.09.08 (총 20일)",
       role: "5인 팀 · 백엔드 & 풀스택 (대시보드 API·전체 뷰 통합)",
       summary:
         "키움증권 WebSocket과 SSE 기반 실시간 시세·지수 스트리밍 및 모의 매매, 투자 커뮤니티를 제공하는 서비스입니다.",
       tags: [
-        "Java 17",
+        "Java",
         "Spring Framework",
         "MyBatis",
         "Oracle DB",
@@ -113,7 +113,7 @@ const PORTFOLIO_DATA = {
         problem:
           "메인 대시보드 진입 시마다 외부 증권사 API를 직접 호출해 KOSPI 차트와 실시간 랭킹을 가져오면 응답 지연이 발생하고, 서버의 차트 데이터 리스트(List<Object[]>)를 JSP 차트 스크립트로 전달할 때 JSON 변환 오류가 발생하면 대시보드 페이지 전체가 열리지 않는 문제 발생",
         solution:
-          "백그라운드 스케줄러가 주기적으로 갱신해 둔 서버 인메모리 캐시(StockMemoryCache·StockRankingCache)에서 시세와 차트 데이터를 즉시 조회하도록 개선했습니다. 또한 차트 리스트를 Jackson ObjectMapper(writeValueAsString)로 JSON 문자열 변환 시 try-catch로 JsonProcessingException을 잡아, 변환에 실패하더라도 기본 빈 배열(\"[]\")을 내려주도록 방어 로직을 구현",
+          '백그라운드 스케줄러가 주기적으로 갱신해 둔 서버 인메모리 캐시(StockMemoryCache·StockRankingCache)에서 시세와 차트 데이터를 즉시 조회하도록 개선했습니다. 또한 차트 리스트를 Jackson ObjectMapper(writeValueAsString)로 JSON 문자열 변환 시 try-catch로 JsonProcessingException을 잡아, 변환에 실패하더라도 기본 빈 배열("[]")을 내려주도록 방어 로직을 구현',
         result:
           "외부 API 중복 호출을 제거해 대시보드 로딩 지연을 해소했으며, 차트 데이터 매핑 오류가 발생하더라도 에러 페이지 대신 인기 종목·커뮤니티 등 대시보드 전체 화면이 정상 렌더링되도록 안정성 확보",
       },
@@ -128,11 +128,11 @@ const PORTFOLIO_DATA = {
       id: 3,
       number: "03",
       title: "니옷내옷 · 코디 매칭 및 옷장 공유 서비스",
-      period: "2026.08.18 - 2026.09.02 (총 16일)",
+      period: "2026.08.07 - 2026.09.02 (총 27일)",
       role: "2인 팀 · 프론트엔드 (착용 상태 설계·세트 매칭 로직·레이어링 구현)",
       summary:
         "레트로 윈도우 탐색기 콘셉트의 화면에서 두 캐릭터의 옷장을 오가며 의상을 입히거나 상대방 옷을 가져와 코디하고, 착용 조합에 따른 데이트 결과를 확인하는 웹 서비스입니다.",
-      tags: ["React 19", "JavaScript", "React Router", "HTML/CSS", "Vite"],
+      tags: ["React", "JavaScript", "React Router", "HTML/CSS", "Vite"],
       image:
         "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
       details: [
@@ -213,7 +213,8 @@ export default function App() {
               </div>
 
               <h1 className="name-title">
-                안녕하세요, 백엔드·풀스택 개발자 <strong>{profile.name}</strong>입니다.
+                안녕하세요, 백엔드·풀스택 개발자 <strong>{profile.name}</strong>
+                입니다.
               </h1>
 
               <p className="headline-text">{profile.headline}</p>
