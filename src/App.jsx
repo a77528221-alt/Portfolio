@@ -398,6 +398,58 @@ export default function App() {
       </main>
 
       {/* =================================================== */}
+      {/* 하단 푸터 (Footer)                                   */}
+      {/* =================================================== */}
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <div className="footer-top">
+            <div className="footer-brand-group">
+              <div className="footer-brand">
+                <strong>{profile.name}</strong>
+                <span className="footer-role-divider">·</span>
+                <span>{profile.role}</span>
+              </div>
+              <p className="footer-message">
+                끝까지 읽어주셔서 감사합니다. 안정적인 백엔드와 완성도 높은
+                서비스를 함께 만들어갈 기회를 기다립니다.
+              </p>
+            </div>
+
+            <div className="footer-actions">
+              <button
+                type="button"
+                className={`contact-chip ${copied ? "is-copied" : ""}`}
+                onClick={handleCopyEmail}>
+                <span>{profile.email}</span>
+                <span className={`copy-status ${copied ? "copied" : ""}`}>
+                  {copied ? "복사됨" : "복사"}
+                </span>
+              </button>
+
+              {profile.githubUrl && (
+                <a
+                  href={profile.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="contact-chip">
+                  GitHub ↗
+                </a>
+              )}
+
+              <a href="#about" className="footer-top-btn">
+                맨 위로 ↑
+              </a>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <span>© 2026 {profile.name}. All rights reserved.</span>
+            <span>Built with React & Vite, deployed on Vercel</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* =================================================== */}
       {/* 프로젝트 상세 내용 / 트러블슈팅 모달                 */}
       {/* =================================================== */}
       {selectedProject && (
